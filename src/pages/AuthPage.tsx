@@ -112,6 +112,21 @@ const AuthPage = () => {
     setIsSubmitting(false);
   };
 
+  const handleGoogleSignIn = async () => {
+    setIsSubmitting(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      toast({ title: "Errore Google Sign-In", description: result.error.message, variant: "destructive" });
+    }
+    if (result.redirected) {
+      // Browser will redirect to Google — just return
+      return;
+    }
+    setIsSubmitting(false);
+  };
+
   return (
     <div className="min-h-screen flex">
       {/* Pannello sinistro - branding */}
